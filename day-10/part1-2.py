@@ -1,4 +1,5 @@
 CLIST_LEN = 256
+CLIST = list(range(0, CLIST_LEN))
 
 def rotate(l, n):
     return l[-n:] + l[:-n]
@@ -6,8 +7,7 @@ def rotate(l, n):
 def hash(clist, lengths, cpos = 0, skip_size = 0):
     for length in lengths:
         clist = rotate(clist, -cpos)
-        sublist = clist[:length]
-        clist[:length] = sublist[::-1]
+        clist[:length] = clist[:length][::-1]
         clist = rotate(clist, cpos)
         cpos = (cpos + length + skip_size) % CLIST_LEN
         skip_size += 1
@@ -16,15 +16,11 @@ def hash(clist, lengths, cpos = 0, skip_size = 0):
 
 with open('lengths.in') as f:
     input = f.readline().strip()
-    clist, _, _ = hash(
-        list(range(0, CLIST_LEN)),
-        map(int,input.split(','))
-    )
 
-    print(clist[0]*clist[1])
+    h, _, _ = hash(CLIST, [int(n) for n in input.split(',')])
+    print(h[0]*h[1])
 
-    lengths = map(ord, list(input))
-    lengths += [17, 31, 73, 47, 23]
+    lengths = [ord(n) for n in list(input)] + list([17, 31, 73, 47, 23])
 
     sparse_hash = list(range(0, CLIST_LEN))
     cpos, skip_size = 0, 0
