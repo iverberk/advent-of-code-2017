@@ -26,12 +26,17 @@ used = 0
 grid = {}
 for row in range(128):
     key = 'xlqgujun-{}'.format(row)
-    bits = ''.join(['{:0>04b}'.format(int(d, 16)) for d in knot_hash(key)])
+    bits = '{:0128b}'.format(int(knot_hash(key), 16))
     for index, bit in enumerate(bits):
         if int(bit): used += 1
         grid[(index, row)] = int(bit)
 
 print("Used: {}".format(used))
+
+# Reuse some Peter Norvig utility functions :-)
+
+def X(point): x, y = point; return x
+def Y(point): x, y = point; return y
 
 def neighbors4(square):
     "The four neighboring squares."
@@ -46,12 +51,13 @@ def bfs(square):
     region = 0
     while queue:
         square = queue.popleft()
-        if square not in seen and grid[square] == 1:
+        if square not in seen and grid[square]:
             region = 1
             seen.append(square)
             for neighbour in neighbors4(square):
-                if neighbour not in seen and neighbour in grid and grid[neighbour] == 1:
-                    queue.extend([neighbour])
+                if 0 <= X(neighbour) < 128 and 0 <= Y(neighbour) < 128:
+                    if neighbour not in seen and grid[neighbour]:
+                        queue.extend([neighbour])
 
     return region
 
