@@ -48,23 +48,22 @@ def neighbors4(square):
 seen = []
 def bfs(square):
     queue = deque([square])
-    region = 0
     while queue:
         square = queue.popleft()
         if square not in seen and grid[square]:
-            region = 1
             seen.append(square)
             for neighbour in neighbors4(square):
                 if 0 <= X(neighbour) < 128 and 0 <= Y(neighbour) < 128:
                     if neighbour not in seen and grid[neighbour]:
                         queue.extend([neighbour])
 
-    return region
-
 regions = 0
 for y in range(128):
     for x in range(128):
-        if (x,y) not in seen:
-            regions += bfs((x,y))
+        if (x,y) in seen or not grid[(x,y)]:
+            continue
+
+        bfs((x,y))
+        regions += 1
 
 print("Regions: {}".format(regions))
