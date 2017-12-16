@@ -4,6 +4,7 @@ with open('dances.in') as f:
 
 def dance(rounds):
     programs = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p']
+    # The dance repeats every 48 rounds (proof-by-examination :-)
     for _ in range(rounds%48):
         for dance in dances:
             if dance[0] == 's':
