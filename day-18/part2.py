@@ -57,7 +57,7 @@ def run(p, receive_q, send_q):
             sends += 1
         elif opcode == 'rcv':
             try:
-                registers[operand1] = receive_q.get(True, 1)
+                registers[operand1] = receive_q.get(True, 0.1)
             except queue.Empty:
                 logger.info("Blocked waiting for data, terminating!")
                 break
