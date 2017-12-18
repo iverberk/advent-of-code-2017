@@ -44,7 +44,7 @@ def run(p, receive_q, send_q):
         elif opcode == 'mod':
             registers[operand1] = v1 % v2
         elif opcode == 'snd':
-            send_q.put(get(operand1, registers))
+            send_q.put(v1)
             sends += 1
         elif opcode == 'rcv':
             try:
