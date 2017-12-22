@@ -17,14 +17,14 @@ with open('particles.in') as f:
 
 for _ in range(0, 1000):
     min_index = 0
-    min_overall_velocity = 0, abs(particles[0][VELOCITY][0]) + abs(particles[0][VELOCITY][1]) + abs(particles[0][VELOCITY][2])
+    min_overall_velocity = abs(particles[0][VELOCITY][0]) + abs(particles[0][VELOCITY][1]) + abs(particles[0][VELOCITY][2])
 
     for index, particle in enumerate(particles):
         particle[VELOCITY] = tuple(map(add, particle[VELOCITY], particle[ACCELERATION]))
         particles[index] = particle
 
         min_velocity = abs(particle[VELOCITY][0]) + abs(particle[VELOCITY][1]) + abs(particle[VELOCITY][2])
-        if  min_velocity < min_overall_velocity:
+        if min_velocity < min_overall_velocity:
             min_overall_velocity = min_velocity
             min_index = index
 
