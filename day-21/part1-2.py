@@ -49,5 +49,3 @@ for _ in range(0, 13):
     art = enhance(art)
 
 print((art == '#').sum())
-
-
